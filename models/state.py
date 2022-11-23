@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 
 class State(BaseModel, Base):
     """ State class """
-    __talbename__ = "states"
+    __tablename__ = "states"
     name = Column(String(128), nullable=False)
     user = os.getenv('HBNB_MYSQL_USER')
     pwd = os.getenv('HBNB_MYSQL_PWD')
