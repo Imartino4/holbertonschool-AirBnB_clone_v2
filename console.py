@@ -136,9 +136,8 @@ class HBNBCommand(cmd.Cmd):
                 v = float(v)
             else:
                 v = int(v)
-            res[param.split('=')[0]] = v 
+            res[param.split('=')[0]] = v
             setattr(new_instance, param.split('=')[0], v)
-        print(res)
         storage.save()
         print(new_instance.id)
         storage.save()
