@@ -35,7 +35,7 @@ class Place(BaseModel, Base):
     amenities = relationship("Amenity", secondary=place_amenity,
                                   viewonly=False)
 
-    if os.getenv("HBNB_MYSQL_DB") != 'db':
+    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def reviews(self):
             """Returns a list of Reviews instances 
