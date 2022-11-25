@@ -3,13 +3,20 @@
 from sqlalchemy import create_engine
 import os
 from sqlalchemy.orm import sessionmaker, scoped_session
-from models.base_model import Base 
+from models.base_model import BaseModel, Base
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.user import User
+from models.place import Place
+from models.review import Review
+ 
 
 
-user = os.getenv('HBNB_MYSQL_USER')
-pwd = os.getenv('HBNB_MYSQL_PWD')
-host = os.getenv('HBNB_MYSQL_HOST')
-db = os.getenv('HBNB_MYSQL_DB')
+USER = os.getenv('HBNB_MYSQL_USER')
+PWD = os.getenv('HBNB_MYSQL_PWD')
+HOST = os.getenv('HBNB_MYSQL_HOST')
+DB = os.getenv('HBNB_MYSQL_DB')
 
 class DBStorage:
     """Database Engine"""
@@ -19,7 +26,7 @@ class DBStorage:
     def __init__(self):
         """Create the engine"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, pwd, host, db), pool_pre_ping=True)
+                                      .format(USER, PWD, HOST, DB), pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             """metadata_obj = MetaData()
             for t in metadata_obj:
@@ -28,15 +35,21 @@ class DBStorage:
 
     def all(self, cls=None): #Este tengo dudas si funciona, lo revisamos
         """This method return a dictionary with all cls objects"""
+        
+        #Para chequear que cls sea efectivamente una clase
+        classes = {"User": User, "State": State, "City": City,
+                   "Amenity": Amenity, "Place": Place, "Review": Review}
+        
         cls_dict = {}
         
-        if cls:
-            cls_objects_ = self.__session.query(cls).all() #hago un llamado de solo los objetos cls
-            for data in cls_objects_:
-                cls_dict[f"{cls}.{data.id}"] = data
+        if cls != None and cls in classes.values():
+                cls_objects_ = self.__session.query(classes[cls]).all() #hago un llamado de solo los objetos cls
+                for data in cls_objects_:
+                    cls_dict[f"{cls}.{data.id}"] = data
         else:
-            for data in self.__session.query().all:
-                cls_dict[f"{data.__class__.__name__}.{data.id}"] = data
+            for c in classes.values():
+                for data in self.__session.query(c).all:
+                    cls_dict[f"{data.__class__.__name__}.{data.id}"] = data
         return cls_dict
     
     def new(self, obj):
