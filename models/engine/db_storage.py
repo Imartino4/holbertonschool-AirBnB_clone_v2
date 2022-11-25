@@ -21,8 +21,8 @@ class DBStorage:
         if os.getenv('HBNB_ENV') == 'test':
             """metadata_obj = MetaData()
             for t in metadata_obj:
-                t.drop(self.__engine, checkfirst=False)""" #El check dio error aca, pruebo con la siguiente linea
-            Base.metadata.drop_all(bind=engine)
+                t.drop(self.__engine, checkfirst=False)""" #El checker dio error aca, pruebo con la siguiente linea
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None): #Este tengo dudas si funciona, lo revisamos
         """This method return a dictionary wit all cls objects"""
