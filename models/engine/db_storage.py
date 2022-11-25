@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """This module defines a class to manage the database for hbnb clone"""
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 import os
 from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base 
 
 
 user = os.getenv('HBNB_MYSQL_USER')

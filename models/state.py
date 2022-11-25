@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
-from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class State(BaseModel, Base):
