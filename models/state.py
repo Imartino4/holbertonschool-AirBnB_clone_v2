@@ -9,13 +9,11 @@ from models import storage
 
 class State(BaseModel, Base):
     """ State class """
-    if os.getenv('HBNB_TYPE_STORAGE') == "db":
-        __tablename__ = "states"
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref='state')
-    else:
-        name = ""
+    __tablename__ = "states"
+    name = Column(String(128), nullable=False)
+    cities = relationship("City", backref='state')
         
+    if os.getenv('HBNB_TYPE_STORAGE') != "db":
         @property
         def cities(self):
             """Getter method to return cities

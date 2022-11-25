@@ -12,6 +12,7 @@ host = os.getenv('HBNB_MYSQL_HOST')
 db = os.getenv('HBNB_MYSQL_DB')
 
 class DBStorage:
+    """Database Engine"""
     __engine = None
     __session = None
 
@@ -19,15 +20,14 @@ class DBStorage:
         """Create the engine"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, pwd, host, db), pool_pre_ping=True)
-        self.reload()
         if os.getenv('HBNB_ENV') == 'test':
             """metadata_obj = MetaData()
             for t in metadata_obj:
-                t.drop(self.__engine, checkfirst=False)""" #El checker dio error aca, pruebo con la siguiente linea
+                t.drop(self.__engine, checkfirst=False)""" #pruebo con la siguiente linea
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None): #Este tengo dudas si funciona, lo revisamos
-        """This method return a dictionary wit all cls objects"""
+        """This method return a dictionary with all cls objects"""
         cls_dict = {}
         
         if cls:
@@ -45,11 +45,11 @@ class DBStorage:
 
     def save(self):
         """Commit all changes of the current database session"""
-        self.__session.commit(obj)
+        self.__session.commit()
     
     def delete(self, obj=None):
         """Deletes obj from current database session"""
-        if obj != None:
+        if obj:
             self.__session.delete(obj)
             self.save()
     
@@ -59,3 +59,4 @@ class DBStorage:
         # Crear la session
         self.__session = sessionmaker(self.__engine, expire_on_commit=False)
         Session = scoped_session(self.__session) #no entendí bien que hace
+        self.__session = Session
