@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 import os
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
-from models import storage
+
 
 # Many to many relationship - esta es la tabla que asocia las dos clases
 place_amenity = Table('place_amenity', Base.metadata,
@@ -40,6 +40,8 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Returns a list of Reviews instances 
             with same place id as current"""
+            from models import storage
+            
             list_reviews = []
             Reviews_ = storage.all("Review") #Aca tengo todos los reviews en diccionario
             for rev in Reviews_.values: #Recorro en la base de datos todas las instancias Review.
