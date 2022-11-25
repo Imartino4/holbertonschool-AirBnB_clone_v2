@@ -33,6 +33,7 @@ class BaseModel:
             self.__dict__.update(kwargs)
             for key, value in kwargs.items():
                 setattr(self, key, value)
+            self.save()
 
     def __str__(self):
         """Returns a string representation of the instance"""
