@@ -9,17 +9,18 @@ from sqlalchemy.orm import relationship
 # Many to many relationship - esta es la tabla que asocia las dos clases
 if os.getenv("HBNB_TYPE_STORAGE") == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
-                        Column('place_id', String(60), ForeignKey(
-                            'places.id'), primary_key=True),
-                        Column('amenity_id', String(60),
-                            ForeignKey("ameinities.id"),
-                            primary_key=True, nullable=False))
+                          Column('place_id', String(60), ForeignKey(
+                              'places.id'), primary_key=True),
+                          Column('amenity_id', String(60),
+                                 ForeignKey("ameinities.id"),
+                                 primary_key=True, nullable=False))
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    
+
+    __tablename__ = 'places'
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
         name = Column(String(128), nullable=False)
@@ -32,7 +33,7 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=False)
         reviews = relationship("Review", backref='place')
         amenities = relationship("Amenity", secondary=place_amenity,
-                                    viewonly=False)
+                                 viewonly=False)
 
     else:
         city_id = ""
@@ -46,16 +47,18 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-        
+
         @property
         def reviews(self):
             """Returns a list of Reviews instances 
             with same place id as current"""
             from models import storage
-            
+
             list_reviews = []
-            Reviews_ = storage.all("Review") #Aca tengo todos los reviews en diccionario
-            for rev in Reviews_.values: #Recorro en la base de datos todas las instancias Review.
-                if self.id == rev.place_id: #Comparo el id de la instancia actual con el de la base
+            # Aca tengo todos los reviews en diccionario
+            Reviews_ = storage.all("Review")
+            # Recorro en la base de datos todas las instancias Review.
+            for rev in Reviews_.values:
+                if self.id == rev.place_id:  # Comparo el id de la instancia actual con el de la base
                     list_reviews.append(rev)
             return list_reviews
