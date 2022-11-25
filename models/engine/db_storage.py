@@ -19,10 +19,10 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, pwd, host, db), pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
-            metadata_obj = MetaData()
+            """metadata_obj = MetaData()
             for t in metadata_obj:
-                t.drop(self.__engine, checkfirst=False)
-            #Base.metadata.drop_all(bind=engine) puede ser otra opción
+                t.drop(self.__engine, checkfirst=False)""" #El check dio error aca, pruebo con la siguiente linea
+            Base.metadata.drop_all(bind=engine)
 
     def all(self, cls=None): #Este tengo dudas si funciona, lo revisamos
         """This method return a dictionary wit all cls objects"""
