@@ -5,10 +5,10 @@ from models.engine.db_storage import DBStorage
 import os
 
 
-if os.getenv('HBNB_TYPE_STORAGE') == "file":
-    storage = FileStorage()
+if os.getenv('HBNB_TYPE_STORAGE') == "db":
+    storage = DBStorage()
     storage.reload()
 
 else:
-    storage = DBStorage()
+    storage = FileStorage()
     storage.reload()
