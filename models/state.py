@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
-from models import storage
 
 
 class State(BaseModel, Base):
@@ -18,6 +17,7 @@ class State(BaseModel, Base):
         def cities(self):
             """Getter method to return cities
             instances with current state_id"""
+            from models import storage
             l_cities = []
             for city in storage.all("City"): #Iria a FileStorage
                 if self.id == city.state_id:
