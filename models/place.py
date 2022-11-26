@@ -31,7 +31,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, default=0)
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
-        reviews = relationship("Review", backref='place')
+        reviews = relationship("Review", backref='place', cascade='delete')
         amenities = relationship("Amenity", secondary=place_amenity,
                                  viewonly=False)
 
@@ -55,10 +55,8 @@ class Place(BaseModel, Base):
             from models import storage
 
             list_reviews = []
-            # Aca tengo todos los reviews en diccionario
             Reviews_ = storage.all("Review")
-            # Recorro en la base de datos todas las instancias Review.
             for rev in Reviews_.values:
-                if self.id == rev.place_id:  # Comparo el id de la instancia actual con el de la base
+                if self.id == rev.place_id:
                     list_reviews.append(rev)
             return list_reviews

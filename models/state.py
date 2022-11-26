@@ -8,6 +8,7 @@ import os
 
 class State(BaseModel, Base):
     """ State class """
+    
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship("City", backref='state')
@@ -19,7 +20,7 @@ class State(BaseModel, Base):
             instances with current state_id"""
             from models import storage
             l_cities = []
-            for city in storage.all("City"): #Iria a FileStorage
+            for city in storage.all("City"):
                 if self.id == city.state_id:
                     l_cities.append(city)
             return l_cities
