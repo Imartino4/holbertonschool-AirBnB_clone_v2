@@ -5,12 +5,12 @@ import os
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 
-a = Table('place_amenity', Base.metadata,
-          Column('place_id', String(60), ForeignKey(
-              'places.id'), primary_key=True),
-          Column('amenity_id', String(60),
-                 ForeignKey("ameinities.id"),
-                 primary_key=True, nullable=False))
+association_table = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60), ForeignKey(
+                              'places.id'), primary_key=True),
+                          Column('amenity_id', String(60),
+                                 ForeignKey("ameinities.id"),
+                                 primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
