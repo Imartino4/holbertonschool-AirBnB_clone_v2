@@ -5,14 +5,14 @@ import os
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 
-
+"""
 place_amenity = Table('place_amenity', Base.metadata,
                         Column('place_id', String(60), ForeignKey(
                             'places.id'), primary_key=True),
                         Column('amenity_id', String(60),
                                 ForeignKey("ameinities.id"),
                                 primary_key=True, nullable=False))
-
+"""
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -28,9 +28,11 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
+    """"
     reviews = relationship("Review", backref='place', cascade='delete')
     amenities = relationship("Amenity", secondary="place_amenity",
                                  viewonly=False)
+    """
 
     @property
     def reviews(self):
