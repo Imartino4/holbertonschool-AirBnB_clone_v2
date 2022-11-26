@@ -45,7 +45,7 @@ class DBStorage:
                 cls_dict[f"{cls}.{data.id}"] = data
         else:
             for c in classes.values():
-                for data in self.__session.query(c).all:
+                for data in self.__session.query(c):
                     cls_dict[f"{data.__class__.__name__}.{data.id}"] = data
         return cls_dict
 
