@@ -15,7 +15,7 @@ from models.review import Review
 USER = os.getenv('HBNB_MYSQL_USER')
 PWD = os.getenv('HBNB_MYSQL_PWD')
 HOST = os.getenv('HBNB_MYSQL_HOST')
-DB = os.getenv('HBNB_TYPE_STORAGE')
+DB_NAME = os.getenv('HBNB_MYSQL_DB')
 
 
 class DBStorage:
@@ -26,7 +26,7 @@ class DBStorage:
     def __init__(self):
         """Create the engine"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(USER, PWD, HOST, DB), pool_pre_ping=True)
+                                      .format(USER, PWD, HOST, DB_NAME), pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
