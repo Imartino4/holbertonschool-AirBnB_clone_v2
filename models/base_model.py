@@ -23,12 +23,15 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
+            if 'id' not in kwargs:
+                self.id = str(uuid.uuid4())
             for k, v in kwargs.items():
-                if k!= '__class__':
+                if k == 'created_at':
+                    setattr(self, k, datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                elif k == 'updated_at':
+                    setattr(self, k, datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                elif k != '__class__':
                     setattr(self, k, v)
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             self.save()
 
     def __str__(self):
