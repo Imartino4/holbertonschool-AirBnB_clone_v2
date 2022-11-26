@@ -6,14 +6,12 @@ from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 
 
-# Many to many relationship - esta es la tabla que asocia las dos clases
-if os.getenv("HBNB_TYPE_STORAGE") == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60), ForeignKey(
-                              'places.id'), primary_key=True),
-                          Column('amenity_id', String(60),
-                                 ForeignKey("ameinities.id"),
-                                 primary_key=True, nullable=False))
+place_amenity = Table('place_amenity', Base.metadata,
+                        Column('place_id', String(60), ForeignKey(
+                            'places.id'), primary_key=True),
+                        Column('amenity_id', String(60),
+                                ForeignKey("ameinities.id"),
+                                primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
