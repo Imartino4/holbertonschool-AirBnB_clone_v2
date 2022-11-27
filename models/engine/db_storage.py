@@ -31,10 +31,9 @@ class DBStorage:
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None):  # Este tengo dudas si funciona, lo revisamos
+    def all(self, cls=None):
         """This method return a dictionary with all cls objects"""
 
-        # Para chequear que cls sea efectivamente una clase
         classes = {"User": User, "State": State, "City": City,
                    "Amenity": Amenity, "Place": Place, "Review": Review}
 
@@ -67,5 +66,5 @@ class DBStorage:
         """Create all tables in the database"""
         Base.metadata.create_all(self.__engine)
         new_session = sessionmaker(self.__engine, expire_on_commit=False)
-        Session = scoped_session(new_session)  # no entendí bien que hace
+        Session = scoped_session(new_session)
         self.__session = Session()

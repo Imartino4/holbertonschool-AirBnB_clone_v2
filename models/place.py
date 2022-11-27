@@ -30,7 +30,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship("Review", backref='place', cascade='delete')
-        amenities = relationship("Amenity", secondary="association_table",
+        amenities = relationship("Amenity", secondary=association_table,
                                  viewonly=False)
 
     else:
@@ -46,16 +46,16 @@ class Place(BaseModel, Base):
                 if self.id == rev.place_id:
                     list_reviews.append(rev)
             return list_reviews
-
+"""
         @property
         def amenities(self):
-            """returns the list of Amenity instances based on the
+            returns the list of Amenity instances based on the
             attribute amenity_ids that contains all Amenity.id
-            linked to the Place"""
+            linked to the Place
             from models import storage
 
             am_list = []
-            Amenities_ = storage.all("Amenity")
+            Amenities_ = storage.all("Amenities")
             for am in Amenities_.values():
                 if am.id in self.amenities_id:
                     am_list.append(am)
@@ -63,7 +63,8 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, obj):
-            """Amenities setter"""
+            Amenities setter
 
             if obj.__class__.__name__ == "Amenity":
                 self.amenities_id(obj.id)
+"""
