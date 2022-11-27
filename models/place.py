@@ -55,7 +55,7 @@ class Place(BaseModel, Base):
             from models import storage
 
             am_list = []
-            Amenities_ = storage.all("Amenities")
+            Amenities_ = storage.all("Amenity")
             for am in Amenities_.values():
                 if am.id in self.amenities_id:
                     am_list.append(am)

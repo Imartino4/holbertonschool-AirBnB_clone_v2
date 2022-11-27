@@ -108,13 +108,9 @@ class test_fileStorage(unittest.TestCase):
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
 
-    def test_user(self):
-        """User attributes"""
-        from models.user import User
+    def test_doc(self):
+        """ Test documentation"""
+        from models.engine import file_storage
         
-        user1 = User(email="a@a", password="123", first_name="Lui",
-                     last_name="Sua")
-        self.assertEqual(user1.email, 'a@a')
-        self.assertEqual(user1.password, '123')
-        self.assertEqual(user1.first_name, 'Lui')
-        self.assertEqual(user1.last_name, 'Sua')
+        self.assertTrue(file_storage.__doc__)
+        
