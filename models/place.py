@@ -46,12 +46,12 @@ class Place(BaseModel, Base):
                 if self.id == rev.place_id:
                     list_reviews.append(rev)
             return list_reviews
-"""
+
         @property
         def amenities(self):
-            returns the list of Amenity instances based on the
+            """returns the list of Amenity instances based on the
             attribute amenity_ids that contains all Amenity.id
-            linked to the Place
+            linked to the Place"""
             from models import storage
 
             am_list = []
@@ -63,8 +63,7 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, obj):
-            Amenities setter
+            """Amenities setter"""
 
             if obj.__class__.__name__ == "Amenity":
                 self.amenities_id(obj.id)
-"""
