@@ -26,20 +26,20 @@ class DBStorage:
     def __init__(self):
         """Create the engine"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(USER, PWD, HOST, DB_NAME), pool_pre_ping=True)
+                                      .format(USER, PWD, HOST, DB_NAME),
+                                      pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None):  # Este tengo dudas si funciona, lo revisamos
+    def all(self, cls=None):
         """This method return a dictionary with all cls objects"""
 
-        # Para chequear que cls sea efectivamente una clase
         classes = {"User": User, "State": State, "City": City,
                    "Amenity": Amenity, "Place": Place, "Review": Review}
 
         cls_dict = {}
 
-        if cls != None and cls in classes.values():
+        if cls is not None and cls in classes.values():
             cls_objects_ = self.__session.query(classes[cls]).all()
             for data in cls_objects_:
                 cls_dict[f"{cls}.{data.id}"] = data
@@ -66,5 +66,5 @@ class DBStorage:
         """Create all tables in the database"""
         Base.metadata.create_all(self.__engine)
         new_session = sessionmaker(self.__engine, expire_on_commit=False)
-        Session = scoped_session(new_session)  # no entendí bien que hace
+        Session = scoped_session(new_session)
         self.__session = Session()

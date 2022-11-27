@@ -107,3 +107,10 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_doc(self):
+        """ Test documentation"""
+        from models.engine import file_storage
+        
+        self.assertTrue(file_storage.__doc__)
+        

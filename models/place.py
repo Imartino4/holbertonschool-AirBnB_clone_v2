@@ -5,13 +5,12 @@ import os
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 
-#  rompe con la association_table y sus respectivas relationships
-# association_table = Table('place_amenity', Base.metadata,
-#                           Column('place_id', String(60), ForeignKey(
-#                               'places.id'), primary_key=True),
-#                           Column('amenity_id', String(60),
-#                                  ForeignKey("amenities.id"),
-#                                  primary_key=True, nullable=False))
+association_table = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60), ForeignKey(
+                              'places.id'), primary_key=True),
+                          Column('amenity_id', String(60),
+                                 ForeignKey("amenities.id"),
+                                 primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -30,14 +29,15 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship("Review", backref='place', cascade='delete')
-        amenities = relationship("Amenity", secondary="place_amenity",
+        amenities = relationship("Amenity", secondary='place_amenity',
                                  viewonly=False)
 
-    @property
-    def reviews(self):
-        """Returns a list of Reviews instances 
-        with same place id as current"""
-        from models import storage
+    else:
+        @property
+        def reviews(self):
+            """Returns a list of Reviews instances
+            with same place id as current"""
+            from models import storage
 
         list_reviews = []
         Reviews_ = storage.all("Review")
@@ -45,7 +45,7 @@ class Place(BaseModel, Base):
             if self.id == rev.place_id:
                 list_reviews.append(rev)
         return list_reviews
-    # no se si funciona bien esto todavia
+
     # @property
     # def amenities(self):
     #     """returns the list of Amenity instances based on the
@@ -56,11 +56,4 @@ class Place(BaseModel, Base):
     #     list_amenities = []
     #     Amenities_ = storage.all("Amenity")
     #     for ame in Amenities_.values:
-    #         if self.id == ame.amenity_ids:
-    #             list_amenities.append(ame)
-    #     return (list_amenities)
-
-    # @amenities.setter
-    # def amenities(self, obj=None):
-    #     if obj.__class__.__name__ is "Amenity":
-    #         self.amenities_ids.append(obj.id)
+    #         if self.id == ame.a

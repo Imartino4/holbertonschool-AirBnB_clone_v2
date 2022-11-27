@@ -27,9 +27,11 @@ class BaseModel:
                 self.id = str(uuid.uuid4())
             for k, v in kwargs.items():
                 if k == 'created_at':
-                    setattr(self, k, datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, k, datetime.strptime(
+                        v, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif k == 'updated_at':
-                    setattr(self, k, datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, k, datetime.strptime(
+                        v, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif k != '__class__':
                     setattr(self, k, v)
             self.save()
@@ -54,7 +56,7 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if "_sa_instance_state" in dictionary:  # Ver si funciona asi
+        if "_sa_instance_state" in dictionary:
             del dictionary["_sa_instance_state"]
         return dictionary
 
