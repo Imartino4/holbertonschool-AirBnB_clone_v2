@@ -67,4 +67,4 @@ class Place(BaseModel, Base):
             """Amenities setter"""
             from models.amenity import Amenity
             if type(obj) == Amenity:
-                self.amenity_ids(obj.id)
+                self.amenity_ids.append(obj.id)
