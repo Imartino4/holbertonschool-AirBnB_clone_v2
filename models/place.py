@@ -58,7 +58,7 @@ class Place(BaseModel, Base):
             am_list = []
             Amenities_ = storage.all(Amenity).values()
             for am in Amenities_:
-                if am.id in self.amenity_id:
+                if am.id in self.amenity_ids:
                     am_list.append(am)
             return am_list
 
@@ -67,4 +67,4 @@ class Place(BaseModel, Base):
             """Amenities setter"""
             from models.amenity import Amenity
             if type(obj) == Amenity:
-                self.amenity_id(obj.id)
+                self.amenity_ids(obj.id)
