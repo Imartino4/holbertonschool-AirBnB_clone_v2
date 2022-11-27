@@ -53,10 +53,11 @@ class Place(BaseModel, Base):
             attribute amenity_ids that contains all Amenity.id
             linked to the Place"""
             from models import storage
+            from models.amenity import Amenity
 
             am_list = []
-            Amenities_ = storage.all("Amenity")
-            for am in Amenities_.values():
+            Amenities_ = storage.all(Amenity).values()
+            for am in Amenities_:
                 if am.id in self.amenities_id:
                     am_list.append(am)
             return am_list
@@ -64,6 +65,5 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, obj):
             """Amenities setter"""
-
             if obj.__class__.__name__ == "Amenity":
-                self.amenities_id(obj.id)
+                self.amenities_id.append(obj.id)
