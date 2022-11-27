@@ -29,9 +29,10 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship("Review", backref='place', cascade='delete')
-        amenities = relationship("Amenity", secondary='place_amenity',
-                                 viewonly=False)
+        reviews = relationship(
+            "Review", backref='place', cascade='all, delete')
+        amenities = relationship(
+            "Amenity", secondary='place_amenity', viewonly=False)
 
     else:
         @property
@@ -41,8 +42,8 @@ class Place(BaseModel, Base):
             from models import storage
 
             list_reviews = []
-            Reviews_ = storage.all("Review")
-            for rev in Reviews_.values:
+            Reviews_ = storage.all("Review").values()
+            for rev in Reviews_:
                 if self.id == rev.place_id:
                     list_reviews.append(rev)
             return list_reviews
@@ -53,9 +54,10 @@ class Place(BaseModel, Base):
             attribute amenity_ids that contains all Amenity.id
             linked to the Place"""
             from models import storage
-
+            from models.amenity import Amenity
+            
             am_list = []
-            Amenities_ = storage.all("Amenity")
+            Amenities_ = storage.all(Amenity).values()
             for am in Amenities_.values():
                 if am.id in self.amenity_ids:
                     am_list.append(am)
