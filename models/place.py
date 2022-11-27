@@ -54,7 +54,6 @@ class Place(BaseModel, Base):
             linked to the Place"""
             from models import storage
 
-                        
             am_list = []
             Amenities_ = storage.all("Amenities")
             for am in Amenities_.values():
