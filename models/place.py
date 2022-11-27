@@ -5,12 +5,13 @@ import os
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 
-association_table = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60), ForeignKey(
-                              'places.id'), primary_key=True),
-                          Column('amenity_id', String(60),
-                                 ForeignKey("amenities.id"),
-                                 primary_key=True, nullable=False))
+#  rompe con la association_table y sus respectivas relationships
+# association_table = Table('place_amenity', Base.metadata,
+#                           Column('place_id', String(60), ForeignKey(
+#                               'places.id'), primary_key=True),
+#                           Column('amenity_id', String(60),
+#                                  ForeignKey("amenities.id"),
+#                                  primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -44,7 +45,7 @@ class Place(BaseModel, Base):
             if self.id == rev.place_id:
                 list_reviews.append(rev)
         return list_reviews
-
+    # no se si funciona bien esto todavia
     # @property
     # def amenities(self):
     #     """returns the list of Amenity instances based on the
@@ -55,4 +56,11 @@ class Place(BaseModel, Base):
     #     list_amenities = []
     #     Amenities_ = storage.all("Amenity")
     #     for ame in Amenities_.values:
-    #         if self.id == ame.a
+    #         if self.id == ame.amenity_ids:
+    #             list_amenities.append(ame)
+    #     return (list_amenities)
+
+    # @amenities.setter
+    # def amenities(self, obj=None):
+    #     if obj.__class__.__name__ is "Amenity":
+    #         self.amenities_ids.append(obj.id)
