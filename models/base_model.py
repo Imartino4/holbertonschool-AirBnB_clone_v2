@@ -27,9 +27,11 @@ class BaseModel:
                 self.id = str(uuid.uuid4())
             for k, v in kwargs.items():
                 if k == 'created_at':
-                    setattr(self, k, datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, k, datetime.strptime(
+                        v, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif k == 'updated_at':
-                    setattr(self, k, datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, k, datetime.strptime(
+                        v, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif k != '__class__':
                     setattr(self, k, v)
             self.save()

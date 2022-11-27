@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 import os
 from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
+from models.amenity import Amenity
 
 association_table = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60), ForeignKey(
@@ -32,27 +33,38 @@ class Place(BaseModel, Base):
         amenities = relationship("Amenity", secondary="place_amenity",
                                  viewonly=False)
 
-    @property
-    def reviews(self):
-        """Returns a list of Reviews instances 
-        with same place id as current"""
-        from models import storage
+    else:
+        @property
+        def reviews(self):
+            """Returns a list of Reviews instances
+            with same place id as current"""
+            from models import storage
 
-        list_reviews = []
-        Reviews_ = storage.all("Review")
-        for rev in Reviews_.values:
-            if self.id == rev.place_id:
-                list_reviews.append(rev)
-        return list_reviews
+            list_reviews = []
+            Reviews_ = storage.all("Review")
+            for rev in Reviews_.values:
+                if self.id == rev.place_id:
+                    list_reviews.append(rev)
+            return list_reviews
 
-    # @property
-    # def amenities(self):
-    #     """returns the list of Amenity instances based on the
-    #     attribute amenity_ids that contains all Amenity.id
-    #     linked to the Place"""
-    #     from models import storage
+        @property
+        def amenities(self):
+            """returns the list of Amenity instances based on the
+            attribute amenity_ids that contains all Amenity.id
+            linked to the Place"""
+            from models import storage
+            from models.amenity import Amenity
+                        
+            am_list = []
+            Amenities_ = storage.all("Amenities")
+            for am in Amenities_.values():
+                if am.id in self.amenities_id:
+                    am_list.append(am)
+            return am_list
 
-    #     list_amenities = []
-    #     Amenities_ = storage.all("Amenity")
-    #     for ame in Amenities_.values:
-    #         if self.id == ame.a
+        @amenities.setter
+        def amenities(self, obj):
+            """Amenities setter"""
+
+            if obj.__class__.__name__ == "Amenity":
+                self.amenities_id(obj.id)

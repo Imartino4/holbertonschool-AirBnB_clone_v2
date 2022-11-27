@@ -26,7 +26,8 @@ class DBStorage:
     def __init__(self):
         """Create the engine"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(USER, PWD, HOST, DB_NAME), pool_pre_ping=True)
+                                      .format(USER, PWD, HOST, DB_NAME),
+                                      pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -39,7 +40,7 @@ class DBStorage:
 
         cls_dict = {}
 
-        if cls != None and cls in classes.values():
+        if cls is not None and cls in classes.values():
             cls_objects_ = self.__session.query(classes[cls]).all()
             for data in cls_objects_:
                 cls_dict[f"{cls}.{data.id}"] = data
