@@ -1,4 +1,4 @@
-#!/usrbin/python3
+#!/usr/bin/python3
 """DBStorage tests module"""
 
 import unittest
