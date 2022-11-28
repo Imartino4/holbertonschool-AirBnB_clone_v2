@@ -34,7 +34,7 @@ class BaseModel:
                         v, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif k != '__class__':
                     setattr(self, k, v)
-        self.save()
+            self.save()
 
     def __str__(self):
         """Returns a string representation of the instance"""
