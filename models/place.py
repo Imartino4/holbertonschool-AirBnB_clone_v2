@@ -28,7 +28,7 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    if (os.getenv('HBNB_TYPE_STORAGE') == 'db'):
         reviews = relationship(
             "Review", backref='place', cascade='all, delete')
         amenities = relationship(
@@ -40,9 +40,10 @@ class Place(BaseModel, Base):
             """Returns a list of Reviews instances
             with same place id as current"""
             from models import storage
+            from models.review import Review
 
             list_reviews = []
-            Reviews_ = storage.all("Review").values()
+            Reviews_ = storage.all(Review).values()
             for rev in Reviews_:
                 if self.id == rev.place_id:
                     list_reviews.append(rev)
