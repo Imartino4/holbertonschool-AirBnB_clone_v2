@@ -140,8 +140,8 @@ class HBNBCommand(cmd.Cmd):
                 v = int(v)
             res[param.split('=')[0]] = v
             setattr(new_instance, param.split('=')[0], v)
-        print(new_instance.id)
         new_instance.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
