@@ -32,7 +32,7 @@ class Place(BaseModel, Base):
         reviews = relationship(
             "Review", backref='place', cascade='all, delete')
         amenities = relationship(
-            "Amenity", secondary='place_amenity', viewonly=False)
+            "Amenity", secondary='place_amenity', viewonly=False, overlaps="place_amenities")
 
     else:
         @property
@@ -48,7 +48,7 @@ class Place(BaseModel, Base):
                 if self.id == rev.place_id:
                     list_reviews.append(rev)
             return list_reviews
-        
+
         @property
         def amenities(self):
             """returns the list of Amenity instances based on the
@@ -56,7 +56,7 @@ class Place(BaseModel, Base):
             linked to the Place"""
             from models import storage
             from models.amenity import Amenity
-            
+
             am_list = []
             Amenities_ = storage.all(Amenity).values()
             for am in Amenities_.values():
