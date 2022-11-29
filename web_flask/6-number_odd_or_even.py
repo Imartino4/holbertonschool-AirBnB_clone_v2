@@ -1,0 +1,56 @@
+#!/usr/bin/python3
+"""This modules start a Flask web application"""
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+app.url_map.strict_slashes = False
+
+
+@app.route("/")
+def hello_hbnb():
+    """Hello"""
+    return "Hello HBNB!"
+
+
+@app.route("/hbnb")
+def hello_hbnb2():
+    """HBNB"""
+    return "HBNB"
+
+
+@app.route("/c/<text>")
+def show_C(text):
+    """Show text"""
+    t = text.replace("_", " ")
+    return "C {}".format(t)
+
+
+@app.route("/python/<text>")
+@app.route("/python")
+def show_python(text="is_cool"):
+    """Show text python"""
+    t = text.replace("_", " ")
+    return "Python {}".format(t)
+
+
+@app.route("/number/<int:n>")
+def show_number(n):
+    """Show number only if n is int"""
+    return "{} is a number".format(n)
+
+
+@app.route("/number_template/<int:n>")
+def show_html(n):
+    """Display a HTML page"""
+    return render_template('5-number.html', n=n)
+
+
+@app.route("/number_odd_or_even/<int:n>")
+def show_html_odd(n):
+    """Display template if n int"""
+    return render_template('6-number_odd_or_even.html', n=n)
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
