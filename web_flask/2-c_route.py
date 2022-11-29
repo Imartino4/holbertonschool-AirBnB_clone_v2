@@ -2,7 +2,6 @@
 """This modules start a Flask web application"""
 
 from flask import Flask
-from markupsafe import escape
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -24,7 +23,7 @@ def hello_hbnb2():
 def show_C(text):
     """Show text"""
     t = text.replace("_", " ")
-    return f"C {escape(t)}"
+    return f"C {t}"
 
 
 if __name__ == "__main__":
