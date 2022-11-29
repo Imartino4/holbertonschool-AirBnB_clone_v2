@@ -23,7 +23,7 @@ def hello_hbnb2():
 def show_C(text):
     """Show text"""
     t = text.replace("_", " ")
-    return f"C {t}"
+    return "C {}".format(t)
 
 
 if __name__ == "__main__":
