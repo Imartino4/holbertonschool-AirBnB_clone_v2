@@ -18,6 +18,7 @@ def hello_hbnb2():
 
 @app.route("/c/<text>")
 def hello_c(text):
+    """Show text"""
     t = text.replace("_", " ")
     return f"C {t}"
 
