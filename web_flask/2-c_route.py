@@ -11,5 +11,16 @@ def hello_hbnb():
     return "Hello HBNB!"
 
 
+@app.route("/hbnb")
+def hello_hbnb2():
+    return "HBNB"
+
+
+@app.route("/c/<text>")
+def hello_c(text):
+    t = text.replace("_", " ")
+    return f"C {t}"
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host='0.0.0.0', port=5000)
