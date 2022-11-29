@@ -27,17 +27,17 @@ def show_C(text):
 
 
 @app.route("/python/<text>")
+@app.route("/python")
 def show_python(text="is_cool"):
     """Show text python"""
     t = text.replace("_", " ")
     return "Python {}".format(t)
 
 
-@app.route("/number/<n>")
+@app.route("/number/<int:n>")
 def show_number(n):
-    """Show number"""
-    if n.isnumeric():
-        return "{} is a number".format(n)
+    """Show number only if n is int"""
+    return "{} is a number".format(n)
 
 
 if __name__ == "__main__":

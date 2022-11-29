@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This modules start a Flask web application"""
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -27,6 +27,7 @@ def show_C(text):
 
 
 @app.route("/python/<text>")
+@app.route("/python")  # pongo las dos posibles rutas
 def show_python(text="is_cool"):
     """Show text python"""
     t = text.replace("_", " ")
