@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Hello Flask!"""
+"""This modules start a Flask web application"""
+
 from flask import Flask
 from markupsafe import escape
 
@@ -20,7 +21,7 @@ def hello_hbnb2():
 
 
 @app.route("/c/<text>")
-def hello_c(text):
+def show_C(text):
     """Show text"""
     t = text.replace("_", " ")
     return f"C {escape(t)}"
