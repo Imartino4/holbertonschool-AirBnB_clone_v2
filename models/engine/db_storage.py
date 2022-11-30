@@ -46,7 +46,7 @@ class DBStorage:
         else:
             for c in classes.values():
                 for data in self.__session.query(c):
-                    cls_dict[f"{data.__class__.__name__}.{data.id}"] = data
+                    cls_dict["{}.{}".format(data.__class__.__name__, data.id)] = data
         return cls_dict
 
     def new(self, obj):
