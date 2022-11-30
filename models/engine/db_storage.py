@@ -42,7 +42,7 @@ class DBStorage:
         if cls is not None and cls in classes.values():
             cls_objects_ = self.__session.query(classes[cls]).all()
             for data in cls_objects_:
-                cls_dict[f"{cls}.{data.id}"] = data
+                cls_dict["{}.{}".format(cls, data.id)] = data
         else:
             for c in classes.values():
                 for data in self.__session.query(c):
