@@ -15,7 +15,7 @@ class FileStorage:
 
         cls_dict = {}
         for inst in FileStorage.__objects:
-            if inst.split('.')[0] == type(cls).__name__:
+            if inst.split('.')[0] == cls.__name__:
                 cls_dict[inst] = FileStorage.__objects[inst]
         return cls_dict
 
