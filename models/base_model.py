@@ -34,7 +34,6 @@ class BaseModel:
                         v, "%Y-%m-%dT%H:%M:%S.%f"))
                 elif k != '__class__':
                     setattr(self, k, v)
-            self.save()
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -50,15 +49,16 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        if "_sa_instance_state" in dictionary:
-            del dictionary["_sa_instance_state"]
-        return dictionary
+        new_dict = self.__dict__.copy()
+        for k, v in new_dict.items():
+            if k == 'created_at':
+                new_dict[k] = self.created_at.isoformat()
+            if k == 'updated_at':
+                new_dict[k] = self.updated_at.isoformat()
+        new_dict['__class__'] = self.__class__.__name__
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
+        return new_dict
 
     def delete(self):
         """Deletes an instance"""
