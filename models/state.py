@@ -21,7 +21,7 @@ class State(BaseModel, Base):
             instances with current state_id"""
             from models import storage
             from models.city import City
-            
+
             l_cities = []
             for city in storage.all(City).values():
                 if self.id == city.state_id:
