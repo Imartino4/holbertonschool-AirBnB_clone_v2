@@ -40,7 +40,7 @@ class DBStorage:
         cls_dict = {}
 
         if type(cls) is not str:
-            cls = cls.__name__ #  A veces pasan objeto y a veces string
+            cls = cls.__name__  # A veces pasan objeto y a veces string
         if cls:
             cls_objects_ = self.__session.query(classes[cls])
             for data in cls_objects_:
@@ -48,7 +48,9 @@ class DBStorage:
         else:
             for c in classes.values():
                 for data in self.__session.query(c):
-                    cls_dict[f"{data.__class__.__name__}.{data.id}"] = data
+                    cls_dict[
+                        "{}.{}".format(
+                            data.__class__.__name__, data.id)] = data
         return cls_dict
 
     def new(self, obj):
