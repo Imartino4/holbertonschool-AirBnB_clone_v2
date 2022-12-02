@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route("/cities_by_states")
+@app.route("/")
 def show_html():
     """Display states list in order"""
     from models.state import State
@@ -16,6 +16,7 @@ def show_html():
 
 
     states = storage.all(State).values()
+    # if getenv("HBNB_TYPE_STORAGE") == 'db':
     cities = storage.all(City).values()
     return render_template(
         '8-cities_by_states.html', states=states, cities=cities)

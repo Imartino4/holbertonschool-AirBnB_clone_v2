@@ -9,7 +9,8 @@
             {% for state in states | sort(attribute='name', reverse = False) %}
             <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
                 <UL>
-                    {% for city in cities%}
+                    {% for city in cities | sort(attribute='name',
+                    reverse = False)%}
                     {% if city.state_id == state.id %}
                     <LI>{{ city.id }}: {{ city.name }}</LI>
                     {% endif %}
