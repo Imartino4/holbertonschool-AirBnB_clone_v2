@@ -12,7 +12,7 @@ app.url_map.strict_slashes = False
 def show_html():
     """Display states list in order"""
     from models.state import State
-    
+
     states = storage.all(State).values()
     return render_template('7-states_list.html', states=states)
     # en html puedo usar states
