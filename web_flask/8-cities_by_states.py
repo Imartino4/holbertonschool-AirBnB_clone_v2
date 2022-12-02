@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route("/")
+@app.route("/cities_by_states")
 def show_html():
     """Display states list in order"""
     from models.state import State
