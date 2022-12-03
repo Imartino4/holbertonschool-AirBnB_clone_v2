@@ -14,7 +14,6 @@ def show_html():
     from models.state import State
     from models.city import City
 
-
     states = storage.all(State).values()
     # if getenv("HBNB_TYPE_STORAGE") == 'db':
     cities = storage.all(City).values()
